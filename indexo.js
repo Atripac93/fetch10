@@ -1,32 +1,33 @@
-const url = "https://striveschool-api.herokuapp.com/books";
+let container = document.querySelector("#lista");
 
-window.onload = () => {
-  fetchBooks();
-};
-const fetchBooks = () => {
-  fetch(url)
-    .then((raw) => raw.json())
-    .then((res) => {
-      let cont = document.querySelector(".img");
-
-      cont.innerHTML = res
-        .map((book) => {
-          return ` <div class='col col-9'> <div class="card mb-4 shadow-sm" id='book_${book.asin}'>
-                <img src='${book.img}' />
-
-                <div class="card-body">
-                  <p class='font-weight-bold text-truncate book-title'> ${book.title} </p>
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <button class='btn btn-primary' onclick="addToCart('${book.title}', '${book.price}', '${book.asin}')"> EUR ${book.price} </button>
-                    <button class='btn btn-secondary' onclick='hideCard(event)'> Nascondi </button>
-                    </div>
-                    <a class='btn btn-warning w-100' href='./details.html?id=${book.asin}'> Dettagli </a>
-                </div>
-              </div> </div>`;
-        })
-        .join("");
+const fetchBook = () => {
+  fetch("https://striveschool-api.herokuapp.com/books")
+    .then((result) => {
+      console.log(result);
+      return result.json();
     })
-    .catch((err) => console.error(err));
+    .then((data) => {
+      console.log(data);
+
+      const imgElement = data.map((book) => {
+        return `
+        <div class="col-4 col-md-4 col-lg-4 row">
+          <div class="card m-2">
+            <img src="${book.img}" alt="${book.title}"/> 
+            <h3>${book.title}</h3>
+            <button>price ${book.price}</button>
+          </div>
+        </div>`;
+      });
+
+      container.innerHTML = imgElement.join("");
+    })
+    .catch((error) => {
+      console.error("Errore, mi dispiace!!!", error);
+    });
 };
+
+fetchBook();
+
+let body = document.querySelector("body");
+body.style.backgroundColor = "yellow";
