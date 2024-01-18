@@ -35,6 +35,7 @@ const searchBooks = () => {
   );
 
   displayBooks(filteredBooks);
+  document.getElementById("searchInput").value = "";
 };
 
 const displayBooks = (books) => {
