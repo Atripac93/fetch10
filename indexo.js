@@ -28,6 +28,16 @@ const fetchBook = () => {
 };
 
 fetchBook();
+const searchBooks = () => {
+  const searchInput = document
+    .getElementById("searchInput")
+    .value.toLowerCase();
+  const filteredBooks = booksData.filter((book) =>
+    book.title.toLowerCase().includes(searchInput)
+  );
+
+  displayBooks(filteredBooks);
+};
 
 let body = document.querySelector("body");
 body.style.backgroundColor = "yellow";
